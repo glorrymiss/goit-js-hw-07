@@ -27,6 +27,15 @@ function createGalleryElements(galleryItems) {
   return element;
 }
 
+boxGallery.addEventListener("click", heandleClickOnImage);
+
+function heandleClickOnImage(event) {
+  if (event.target.classList.contain("gallery__link")) {
+    event.target.stopPropagation();
+  }
+  console.log(event.target);
+}
+
 // galleryItems.map((item) => {
 //   const { original, preview } = item;
 //   console.log(preview);
@@ -47,9 +56,6 @@ function createGalleryElements(galleryItems) {
 // });
 // boxGallery.append(...galleryEl);
 
-// boxGallery.addEventListener("focus", heandleFocusImageLarge);
-
-// function heandleFocusImageLarge(event) {
 //   event.currentTarget.onclick = () => {
 //     basicLightbox
 //       .create(
