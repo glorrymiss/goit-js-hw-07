@@ -14,7 +14,7 @@ function createGalleryElements(galleryItems) {
       <a class="gallery__link" href="${original}">
         <img
           class="gallery__image"
-          src="small-image.jpg"
+          src="${original}"
           data-source="${original}"
           alt="${description}"
         />
@@ -23,7 +23,7 @@ function createGalleryElements(galleryItems) {
    `;
     })
     .join("");
-
+  console.log(element);
   return element;
 }
 
