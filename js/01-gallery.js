@@ -4,22 +4,59 @@ import { galleryItems } from "./gallery-items.js";
 console.log(galleryItems);
 
 const boxGallery = document.querySelector(".gallery");
+const allCreatedElements = createGalleryElements(galleryItems);
+boxGallery.insertAdjacentHTML("afterbegin", allCreatedElements);
+function createGalleryElements(galleryItems) {
+  const element = galleryItems
+    .map(({ description, original, preview }) => {
+      return `
+    <div class="gallery__item">
+      <a class="gallery__link" href="${preview}">
+        <img
+          class="gallery__image"
+          src="small-image.jpg"
+          data-source="${original}"
+          alt="Image description"
+        />
+      </a>
+    </div>
+   `;
+    })
+    .join("");
 
-const galleryEl = galleryItems.map((item) => {
-  const { description, original, preview } = item;
-  console.log(preview);
-  const galleryItem = document.createElement("div");
-  galleryItem.setAttribute("class", "gallery__item");
-  const galleryLink = document.createElement("a");
-  galleryLink.setAttribute("class", "gallery__link");
-  galleryLink.setAttribute("href", preview);
-  galleryItem.appendChild(galleryLink);
-  const galleryImage = document.createElement("img");
-  galleryImage.setAttribute("class", "gallery__image");
-  galleryImage.setAttribute("src", "small-image.jpg");
-  galleryImage.setAttribute("data-source", original);
-  galleryImage.setAttribute("alt", description);
-  galleryLink.appendChild(galleryImage);
-  return galleryItem;
-});
-boxGallery.append(...galleryEl);
+  return element;
+}
+
+// galleryItems.map((item) => {
+//   const { original, preview } = item;
+//   console.log(preview);
+//   const galleryItem = document.createElement("div");
+//   galleryItem.setAttribute("class", "gallery__item");
+//   const galleryLink = document.createElement("a");
+//   galleryLink.setAttribute("class", "gallery__link");
+//   galleryLink.setAttribute("href", preview);
+//   galleryItem.appendChild(galleryLink);
+//   const galleryImage = document.createElement("img");
+//   galleryImage.setAttribute("class", "gallery__image");
+//   galleryImage.setAttribute("src", "small-image.jpg");
+//   galleryImage.setAttribute("data-source", original);
+//   galleryImage.setAttribute("alt", "Image description");
+//   galleryLink.appendChild(galleryImage);
+//   console.log(galleryItem);
+//   return galleryItem;
+// });
+// boxGallery.append(...galleryEl);
+
+// boxGallery.addEventListener("focus", heandleFocusImageLarge);
+
+// function heandleFocusImageLarge(event) {
+//   event.currentTarget.onclick = () => {
+//     basicLightbox
+//       .create(
+//         `
+// 		<img width="1400" height="900" data-source=original>
+// 	`
+//       )
+//       .show();
+//   };
+// }
