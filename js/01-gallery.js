@@ -37,4 +37,7 @@ function heandleClickOnImage(event) {
 `);
 
   allImagesShow.show();
+  event.gallery = $(".gallery a").basicLightbox();
+
+  gallery.close();
 }
