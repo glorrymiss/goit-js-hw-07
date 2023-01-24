@@ -36,26 +36,45 @@ function heandleClickOnImage(event) {
   //   === створила змінну для лінку фото
   const linkImage = event.target.dataset.source;
   console.log(linkImage);
-  //  === закриття по escape;
-  const heanderEscapeClose = (event) => {
-    if (event.code === "Escape") {
-      instance.close();
-    }
-  };
+
   // === додала модальний показ з бібліотеки
   const instance = basicLightbox.create(
-    `<img src="${linkImage}" width="800" height="600">`,
-    {
-      onShow: (instance) => {
-        if (basicLightbox.visible()) {
-          window.addEventListener("keydown", heanderEscapeClose);
-        }
-      },
+    `<img src="${linkImage}" width="800" height="600">`
+    // {
+    //   onShow: (instance) => {
+    //     if (basicLightbox.visible()) {
+    //       window.addEventListener("keydown", heanderEscapeClose);
+    //     }
+    //   },
 
-      onClose: (instance) => {
-        window.removeEventListener("keydown", heanderEscapeClose);
-      },
-    }
+    //   onClose: (instance) => {
+    //     window.removeEventListener("keydown", heanderEscapeClose);
+    //   },
+    // }
   );
   instance.show();
+  closePictureButtonEsc(instance);
+}
+
+//  === закриття по escape;
+//   const heanderEscapeClose = (event) => {
+//     if (event.code === "Escape") {
+//       instance.close();
+//     }
+//   };
+// === функція закриття модальної вікна за допомогою escape;
+function closePictureButtonEsc(instance) {
+  window.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.code !== "Escape") {
+        return;
+      } else if (!basicLightbox.visible()) {
+        return;
+      } else {
+        instance.close();
+      }
+    },
+    { once: true }
+  );
 }
