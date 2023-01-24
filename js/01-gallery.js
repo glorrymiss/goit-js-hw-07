@@ -27,8 +27,10 @@ function createGalleryElements(galleryItems) {
   return element;
 }
 boxGallery.addEventListener("click", heandleClickOnImage);
-
 function heandleClickOnImage(event) {
+  if (event.target.nodeName !== "IMG") {
+    return;
+  }
   event.preventDefault();
 
   //   === створила змінну для лінку фото
@@ -42,8 +44,7 @@ function heandleClickOnImage(event) {
   };
   // === додала модальний показ з бібліотеки
   const instance = basicLightbox.create(
-    `
-    <img src="${linkImage}" width="800" height="600">`,
+    `<img src="${linkImage}" width="800" height="600">`,
     {
       onShow: (instance) => {
         if (basicLightbox.visible()) {
@@ -56,6 +57,5 @@ function heandleClickOnImage(event) {
       },
     }
   );
-
   instance.show();
 }
