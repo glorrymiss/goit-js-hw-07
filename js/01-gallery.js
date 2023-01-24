@@ -26,18 +26,36 @@ function createGalleryElements(galleryItems) {
   console.log(element);
   return element;
 }
-
 boxGallery.addEventListener("click", heandleClickOnImage);
 
 function heandleClickOnImage(event) {
   event.preventDefault();
-  const linkImages = event.target.getAttribute("data-source");
-  const allImagesShow = basicLightbox.create(`
-    <img src="${linkImages}" width="800" height="600">
-`);
 
-  allImagesShow.show();
-  event.gallery = $(".gallery a").basicLightbox();
+  //   === створила змінну для лінку фото
+  const linkImage = event.target.dataset.source;
+  console.log(linkImage);
+  //  === закриття по escape;
+  const heanderEscapeClose = (event) => {
+    if (event.code === "Escape") {
+      instance.close();
+    }
+  };
+  // === додала модальний показ з бібліотеки
+  const instance = basicLightbox.create(
+    `
+    <img src="${linkImage}" width="800" height="600">`,
+    {
+      onShow: (instance) => {
+        if (basicLightbox.visible()) {
+          window.addEventListener("keydown", heanderEscapeClose);
+        }
+      },
 
-  gallery.close();
+      onClose: (instance) => {
+        window.removeEventListener("keydown", heanderEscapeClose);
+      },
+    }
+  );
+
+  instance.show();
 }

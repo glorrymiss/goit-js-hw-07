@@ -10,7 +10,7 @@ function createGalleryImages(galleryItems) {
       return `
      <li class ="gallery__item">
     <a class="gallery__item" href="${original}">
-  <img class="gallery__image" src="${preview}" alt="${description}" />
+  <img class="gallery__image" src="${preview}" alt="${description}" title="${description}" />
 </a>
     </li>
     `;
@@ -21,15 +21,9 @@ function createGalleryImages(galleryItems) {
 }
 gallery.insertAdjacentHTML("afterbegin", allElements);
 
-gallery.addEventListener("click", heandleClickImage);
-// ====== підключення SimpleLightbox
-function heandleClickImage(event) {
-  event.preventDefault();
-
-  new SimpleLightbox(".gallery a", {
-    // === затримка і виведення опису зображення
-    captionData: "alt",
-    captionDelay: 250,
-  });
-}
-console.log(gallery);
+// ====== підключення SimpleLightbox + містить в собі preventDefault()
+const lightbox = new SimpleLightbox(".gallery a", {
+  // === затримка і виведення опису зображення
+  captionData: "title",
+  captionDelay: 250,
+});
