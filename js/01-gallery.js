@@ -26,8 +26,8 @@ function createGalleryElements(galleryItems) {
   console.log(element);
   return element;
 }
-boxGallery.addEventListener("click", heandleClickOnImage);
-function heandleClickOnImage(event) {
+boxGallery.addEventListener("click", hendleClickOnImage);
+function hendleClickOnImage(event) {
   if (event.target.nodeName !== "IMG") {
     return;
   }
@@ -39,42 +39,42 @@ function heandleClickOnImage(event) {
 
   // === додала модальний показ з бібліотеки
   const instance = basicLightbox.create(
-    `<img src="${linkImage}" width="800" height="600">`
-    // {
-    //   onShow: (instance) => {
-    //     if (basicLightbox.visible()) {
-    //       window.addEventListener("keydown", heanderEscapeClose);
-    //     }
-    //   },
+    `<img src="${linkImage}" width="800" height="600">`,
+    {
+      hendler: null,
+      onShow: (instance) => {
+        this.hendler = onEscapeClose.bind(instance);
+        window.addEventListener("keydown", this.hendler);
+      },
 
-    //   onClose: (instance) => {
-    //     window.removeEventListener("keydown", heanderEscapeClose);
-    //   },
-    // }
+      onClose: () => {
+        window.removeEventListener("keydown", this.hendler);
+      },
+    }
   );
   instance.show();
-  closePictureButtonEsc(instance);
+  // closePictureButtonEsc(instance);
 }
 
 //  === закриття по escape;
-//   const heanderEscapeClose = (event) => {
-//     if (event.code === "Escape") {
-//       instance.close();
-//     }
-//   };
-// === функція закриття модальної вікна за допомогою escape;
-function closePictureButtonEsc(instance) {
-  window.addEventListener(
-    "keydown",
-    (event) => {
-      if (event.code !== "Escape") {
-        return;
-      } else if (!basicLightbox.visible()) {
-        return;
-      } else {
-        instance.close();
-      }
-    },
-    { once: true }
-  );
+function onEscapeClose(event) {
+  if (event.code === "Escape") {
+    this.close();
+  }
 }
+// === функція закриття модальної вікна за допомогою escape;
+// function closePictureButtonEsc(instance) {
+//   window.addEventListener(
+//     "keydown",
+//     (event) => {
+//       if (event.code !== "Escape") {
+//         return;
+//       } else if (!basicLightbox.visible()) {
+//         return;
+//       } else {
+//         instance.close();
+//       }
+//     },
+//     { once: true }
+//   );
+// }
